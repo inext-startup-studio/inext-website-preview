@@ -1,0 +1,10 @@
+# WordPress export — not part of this repo
+wordpress/
+
+# Misc local files
+*.pdf
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
