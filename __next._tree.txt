@@ -54,4 +54,4 @@
 :HL["/inext-website-preview/assets/partners/comance.png","image"]
 :HL["/inext-website-preview/assets/partners/rydge-conseil.png","image"]
 :HL["/inext-website-preview/assets/partners/spinnaker-avocats.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"hUE8hWYC7VRT_TnoLxJ91"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"c21cc164e96a80cd96deab63f0dd851816d1bdc2"}
