@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# This repo is a publish target, not a source repo: the site is built in the
+# private inext-website repo and pushed here by its publish-preview workflow.
+# Deploying through Actions rather than the legacy Jekyll pipeline avoids two
+# traps — Jekyll silently dropping the underscore-prefixed _next/ directory,
+# and push-triggered legacy builds occasionally deploying the previous commit.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; queue them instead of cancelling, so the last
+# push always ends up being the one that is live.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - name: Stage the site
+        # Everything except repo plumbing is web content. Staging rather than
+        # uploading "." keeps .git and the workflow itself off the public site.
+        run: |
+          mkdir -p _site
+          rsync -a --exclude .git --exclude .github --exclude _site ./ _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
