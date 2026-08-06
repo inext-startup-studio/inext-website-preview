@@ -58,8 +58,12 @@ slug:
 
 # Enables the "view on the site" links in the editor. It stays the preview site once
 # production exists: what an editor just saved is on `preview`, and only reaches
-# production on merge. Note that it cannot simply be left to default to the current
-# origin, which would drop the repository subpath the preview is served from.
+# production on merge.
+#
+# Careful when changing this: Sveltia keeps only the *origin* of this URL for per-entry
+# preview links (`new URL(site_url).origin`), so the repository subpath GitHub Pages
+# serves the preview from is dropped. Each `preview_path` below therefore has to carry
+# that subpath itself, or the link 404s on the bare github.io host.
 site_url: https://inext-startup-studio.github.io/inext-website-preview
 
 # ── Pages ────────────────────────────────────────────────────────────────────
@@ -76,7 +80,7 @@ singletons:
     file: content/pages/home.md
     icon: home
     format: yaml-frontmatter
-    preview_path: /
+    preview_path: inext-website-preview/
     fields:
       - &page_title
         name: title
@@ -352,7 +356,7 @@ singletons:
     file: content/pages/comite.md
     icon: groups
     format: yaml-frontmatter
-    preview_path: comite/
+    preview_path: inext-website-preview/comite/
     fields:
       - *page_title
       - *page_description
