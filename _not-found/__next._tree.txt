@@ -1,3 +1,3 @@
 :HL["/inext-website-preview/_next/static/chunks/22x27v6hswvfp.css","style"]
 :HL["/inext-website-preview/assets/logo-mark.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"0d4c3b4077ed6954d83e63aa0a9b5f602d3648bb"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"14735bd9773bd3589431e243c7edaa5288a54743"}
