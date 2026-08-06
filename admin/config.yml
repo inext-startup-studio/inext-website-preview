@@ -1,0 +1,591 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+# Sveltia CMS (https://sveltiacms.app) — content model for the editing UI.
+#
+# This describes the same model that src/lib/content.ts validates at build time with
+# Zod, and the two must stay aligned in both directions:
+#   - a field described here but absent from Zod is silently dropped when the site builds;
+#   - a field Zod requires but missing here is erased from the file the first time an
+#     editor saves that entry, and the next build fails.
+# Editor-facing strings are French, like the site and its editors; comments are English,
+# like the rest of the repository.
+
+backend:
+  name: github
+  repo: inext-startup-studio/inext-website
+  # The publish workflow watches this branch, so saving in the CMS republishes the
+  # board preview. Deliberately not the production branch: edits are reviewed on the
+  # preview site and reach production by merging, so the CMS targets `preview` even
+  # when it is opened from the production host.
+  branch: preview
+  # The site is a static export with no server of its own, so the OAuth code-for-token
+  # exchange runs in a Cloudflare Worker (github.com/sveltia/sveltia-cms-auth).
+  base_url: https://sveltia-cms-auth.stephaneberle9.workers.dev
+  # Sent to the worker as `site_id` and matched against its ALLOWED_DOMAINS. This
+  # identifies the CMS deployment, not the host serving it — Sveltia would otherwise
+  # fall back to the browser's hostname (`cms.netlify.com` on localhost). Pinning it to
+  # one value is what lets the same admin page authenticate from the preview host, from
+  # a future inext.icu, and from localhost without touching this file or Cloudflare.
+  # That the pinned value names the preview host also mirrors what `branch` above nails
+  # down — this CMS edits the preview wherever it is served from. Only `branch` enforces
+  # that, though; this option cannot affect where content lands.
+  site_domain: inext-startup-studio.github.io
+  # Commits are authored by whoever is signed in and GPG-signed by GitHub itself
+  # (Sveltia writes through the GraphQL createCommitOnBranch mutation), so they pass a
+  # signature requirement without editors holding keys.
+  commit_messages:
+    create: "content: add {{path}} (via Sveltia CMS)"
+    update: "content: update {{path}} (via Sveltia CMS)"
+    delete: "content: remove {{path}} (via Sveltia CMS)"
+    uploadMedia: "content: add asset {{path}} (via Sveltia CMS)"
+    deleteMedia: "content: remove asset {{path}} (via Sveltia CMS)"
+
+# Artwork lives in the repository next to the content. `public_folder` is what gets
+# written into the files: site-absolute "/assets/…" paths, which prefixAssets() in
+# src/lib/content.ts rewrites for the deployment's base path at render time.
+media_folder: /public/assets
+public_folder: /assets
+
+output:
+  # content.ts marks many fields `.optional()`. Writing them as empty strings would
+  # break the stricter ones — `z.string().url()` rejects "" — so leave them out
+  # entirely and let Zod's defaults apply. Note that `false` and `0` are not "empty".
+  omit_empty_optional_fields: true
+
+slug:
+  # Keeps generated file names ASCII, e.g. "Éric Valat" -> eric-valat.md.
+  clean_accents: true
+
+# Enables the "view on the site" links in the editor. It stays the preview site once
+# production exists: what an editor just saved is on `preview`, and only reaches
+# production on merge. Note that it cannot simply be left to default to the current
+# origin, which would drop the repository subpath the preview is served from.
+site_url: https://inext-startup-studio.github.io/inext-website-preview
+
+# ── Pages ────────────────────────────────────────────────────────────────────
+#
+# Both pages are a list of typed blocks. The discriminant is `type`, Sveltia's default
+# `typeKey`, and its values match the members of blockSchema in content.ts.
+#
+# YAML anchors below (&name / *name) declare each repeated field once. Sveltia resolves
+# aliases when it parses this file.
+
+singletons:
+  - name: home
+    label: "Page d'accueil"
+    file: content/pages/home.md
+    icon: home
+    format: yaml-frontmatter
+    preview_path: /
+    fields:
+      - &page_title
+        name: title
+        label: Titre (onglet du navigateur)
+        widget: string
+      - &page_description
+        name: description
+        label: Description (référencement)
+        widget: text
+        required: false
+      - &page_blocks
+        name: blocks
+        label: Blocs
+        label_singular: Bloc
+        widget: list
+        collapsed: true
+        summary: "{{fields.type}} — {{fields.heading}}{{fields.title}}"
+        types:
+          # ── hero ──
+          - name: hero
+            label: "Hero (bandeau d'accueil)"
+            widget: object
+            fields:
+              - &kicker
+                name: kicker
+                label: Sur-titre
+                widget: string
+              - name: title
+                label: Titre
+                widget: string
+                hint: "« | » force un retour à la ligne, *texte* passe en orange."
+              - name: text
+                label: Texte
+                widget: text
+              - name: ctas
+                label: Boutons
+                label_singular: Bouton
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields: &cta_fields
+                  - name: label
+                    label: Libellé
+                    widget: string
+                  - name: href
+                    label: Lien
+                    widget: string
+                    hint: "Page interne (/comite/) ou ancre (/#contact)."
+                  - name: variant
+                    label: Style
+                    widget: select
+                    default: primary
+                    options:
+                      - { label: "Orange (principal)", value: primary }
+                      - { label: "Contour (secondaire)", value: ghost }
+                      - { label: "Sombre (sur bannière)", value: dark }
+              - name: motif
+                label: Motif graphique en fond
+                widget: boolean
+                default: true
+
+          # ── portfolio ──
+          - name: portfolio
+            label: Portefeuille (participations)
+            widget: object
+            fields:
+              - &anchor
+                name: anchor
+                label: Ancre
+                widget: string
+                required: false
+                hint: "Identifiant utilisé par les liens /#… du menu."
+              - *kicker
+              - &heading
+                name: heading
+                label: Titre
+                widget: string
+              - name: countLabel
+                label: Libellé du compteur
+                widget: string
+                required: false
+              - name: moreTile
+                label: Tuile finale
+                widget: object
+                required: false
+                collapsed: auto
+                hint: "Les autres tuiles proviennent de la collection « Participations »."
+                fields:
+                  - name: title
+                    label: Titre
+                    widget: string
+                  - name: href
+                    label: Lien
+                    widget: string
+
+          # ── programme ──
+          - name: programme
+            label: Programme (cartes)
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - &intro
+                name: intro
+                label: Introduction
+                widget: text
+                required: false
+              - &art_image
+                name: image
+                label: Illustration
+                widget: image
+                required: false
+                media_folder: /public/assets/art
+                public_folder: /assets/art
+              - &art_image_alt
+                name: imageAlt
+                label: Texte alternatif de l'illustration
+                widget: string
+                required: false
+                default: ""
+              - name: cards
+                label: Cartes
+                label_singular: Carte
+                widget: list
+                summary: "{{fields.title}}"
+                fields:
+                  - name: icon
+                    label: Icône
+                    widget: image
+                    media_folder: /public/assets
+                    public_folder: /assets
+                  - name: title
+                    label: Titre
+                    widget: string
+                  - name: text
+                    label: Texte
+                    widget: text
+                  - name: accent
+                    label: Carte mise en avant
+                    widget: boolean
+                    default: false
+                  - name: url
+                    label: Lien
+                    widget: string
+                    required: false
+
+          # ── textSection ──
+          - name: textSection
+            label: Section texte + image
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - name: text
+                label: Texte
+                widget: text
+              - name: cta
+                label: Bouton
+                widget: object
+                required: false
+                collapsed: auto
+                fields: *cta_fields
+              - *art_image
+              - *art_image_alt
+              - name: imagePos
+                label: Position de l'illustration
+                widget: select
+                default: right
+                options:
+                  - { label: À droite, value: right }
+                  - { label: À gauche, value: left }
+
+          # ── partners ──
+          - name: partners
+            label: Partenaires
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - name: intro
+                label: Introduction
+                widget: text
+                required: false
+                hint: "Les logos proviennent de la collection « Partenaires »."
+
+          # ── contact ──
+          - name: contact
+            label: Formulaire de contact
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - *intro
+              - *art_image
+              - *art_image_alt
+
+          # ── ctaBanner ──
+          - name: ctaBanner
+            label: "Bannière d'appel à l'action"
+            widget: object
+            fields:
+              - *heading
+              - name: cta
+                label: Bouton
+                widget: object
+                fields: *cta_fields
+
+          # ── stats ──
+          - name: stats
+            label: Chiffres clés
+            widget: object
+            fields:
+              - name: items
+                label: Chiffres
+                label_singular: Chiffre
+                widget: list
+                summary: "{{fields.value}} — {{fields.label}}"
+                fields:
+                  - name: value
+                    label: Valeur
+                    widget: string
+                  - name: label
+                    label: Légende
+                    widget: string
+
+          # ── members ──
+          - name: members
+            label: Membres du comité
+            widget: object
+            fields:
+              - *kicker
+              - *heading
+              - name: intro
+                label: Introduction
+                widget: text
+                required: false
+                hint: "Les portraits proviennent de la collection « Comité de surveillance »."
+
+          # ── prose ──
+          - name: prose
+            label: "Texte long (mentions légales, etc.)"
+            widget: object
+            fields:
+              - &prose_body
+                name: body
+                label: Contenu
+                widget: markdown
+                # No image component: markdown is rendered as-is, and prefixAssets()
+                # does not reach inside it to apply the deployment's base path.
+                editor_components: []
+
+          # ── spotlight ──
+          - name: spotlight
+            label: Encadré éditorial
+            widget: object
+            fields:
+              - *anchor
+              - *heading
+              - name: callout
+                label: Accroche
+                widget: string
+                required: false
+              - *prose_body
+              - *art_image
+              - *art_image_alt
+
+  - name: comite-page
+    label: Page Comité
+    file: content/pages/comite.md
+    icon: groups
+    format: yaml-frontmatter
+    preview_path: comite/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
+  - divider: true
+
+  # ── Réglages ───────────────────────────────────────────────────────────────
+  - name: site
+    label: Réglages du site
+    file: content/global/site.json
+    icon: settings
+    format: json
+    fields:
+      - name: siteTitle
+        label: Nom du site
+        widget: string
+      - name: tagline
+        label: Signature
+        widget: string
+      - name: description
+        label: Description (référencement)
+        widget: text
+      - name: nav
+        label: Menu de navigation
+        label_singular: Entrée
+        widget: list
+        summary: "{{fields.label}}"
+        fields:
+          - name: label
+            label: Libellé
+            widget: string
+          - name: href
+            label: Lien
+            widget: string
+          - name: button
+            label: Afficher en bouton
+            widget: boolean
+            default: false
+      - name: social
+        label: Réseaux sociaux
+        widget: object
+        fields:
+          - name: linkedin
+            label: LinkedIn
+            widget: string
+            type: url
+      - name: contact
+        label: Contact
+        widget: object
+        fields:
+          # Declared only so that saving this file does not drop it: Sveltia rewrites
+          # the whole file from the fields described here.
+          - name: _note
+            label: Note interne
+            widget: string
+            required: false
+            readonly: true
+          - name: email
+            label: Adresse e-mail de réception
+            widget: string
+            type: email
+          - name: formAction
+            label: Endpoint du formulaire
+            widget: string
+            required: false
+            readonly: true
+            hint: "Réglage technique. Vide = le formulaire ouvre le client mail du visiteur."
+      - name: footer
+        label: Pied de page
+        widget: object
+        fields:
+          - name: note
+            label: Mention
+            widget: string
+
+# ── Collections ──────────────────────────────────────────────────────────────
+#
+# One file per item, ordered by the `order` field — the same field the drag-and-drop
+# reordering writes, numbered from 1. File names are derived from `name`.
+
+collections:
+  - name: startups
+    label: Participations
+    label_singular: Participation
+    icon: workspaces
+    folder: content/startups
+    format: yaml-frontmatter
+    extension: md
+    identifier_field: name
+    thumbnail: logo
+    reorder: true
+    sortable_fields:
+      fields: [order, name]
+      default: { field: order, direction: ascending }
+    fields:
+      - &item_name
+        name: name
+        label: Nom
+        widget: string
+      - &item_description
+        name: description
+        label: Description
+        widget: string
+        required: false
+      - &item_url
+        name: url
+        label: Site web
+        widget: string
+        type: url
+        required: false
+        hint: "URL complète (https://…). Laisser vide si aucune."
+      - name: logo
+        label: Logo
+        widget: image
+        media_folder: /public/assets/portfolio
+        public_folder: /assets/portfolio
+      - name: neonLogo
+        label: Logo néon (variante lumineuse)
+        widget: image
+        required: false
+        media_folder: /public/assets/portfolio/neon
+        public_folder: /assets/portfolio/neon
+      - &item_order
+        name: order
+        label: Ordre d'affichage
+        widget: number
+        value_type: int
+        min: 1
+        hint: "Se règle aussi par glisser-déposer depuis la liste."
+      - name: tile
+        label: Réglages de la tuile
+        widget: object
+        collapsed: true
+        hint: Ajustements fins pour équilibrer visuellement les logos entre eux.
+        fields:
+          - name: padding
+            label: Marge intérieure (px)
+            widget: number
+            value_type: int
+            default: 22
+            min: 0
+            max: 60
+          - name: maxHeight
+            label: Hauteur max du logo (px)
+            widget: number
+            value_type: int
+            default: 64
+            min: 20
+            max: 140
+          - name: neonWidth
+            label: Largeur du logo néon (% de la tuile)
+            widget: number
+            value_type: float
+            required: false
+            min: 10
+            max: 100
+
+  - name: partners
+    label: Partenaires
+    label_singular: Partenaire
+    icon: handshake
+    folder: content/partners
+    format: yaml-frontmatter
+    extension: md
+    identifier_field: name
+    thumbnail: logo
+    reorder: true
+    sortable_fields:
+      fields: [order, name]
+      default: { field: order, direction: ascending }
+    fields:
+      - *item_name
+      - *item_description
+      - *item_url
+      - name: logo
+        label: Logo
+        widget: image
+        media_folder: /public/assets/partners
+        public_folder: /assets/partners
+      - *item_order
+
+  - name: comite
+    label: Comité de surveillance
+    label_singular: Membre
+    icon: badge
+    folder: content/comite
+    format: yaml-frontmatter
+    extension: md
+    identifier_field: name
+    thumbnail: photo
+    reorder: true
+    sortable_fields:
+      fields: [order, name]
+      default: { field: order, direction: ascending }
+    fields:
+      - *item_name
+      - name: roles
+        label: Rôles
+        widget: string
+        hint: "Séparés par des virgules, ex. « Stratégie, Technologie, Commerce »."
+      - name: url
+        label: Profil LinkedIn
+        widget: string
+        type: url
+        required: false
+        hint: "URL complète (https://…). Laisser vide si aucune."
+      - name: photo
+        label: Portrait
+        widget: image
+        media_folder: /public/assets/board
+        public_folder: /assets/board
+      - *item_order
+
+# Browsing the media library by folder rather than as one flat list.
+asset_collections:
+  - name: portfolio
+    label: Logos des participations
+    icon: workspaces
+    media_folder: /public/assets/portfolio
+    public_folder: /assets/portfolio
+  - name: partners
+    label: Logos des partenaires
+    icon: handshake
+    media_folder: /public/assets/partners
+    public_folder: /assets/partners
+  - name: board
+    label: Portraits du comité
+    icon: badge
+    media_folder: /public/assets/board
+    public_folder: /assets/board
+  - name: art
+    label: Illustrations
+    icon: image
+    media_folder: /public/assets/art
+    public_folder: /assets/art

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>INEXT — Administration du contenu</title>
+  </head>
+  <body>
+    <!--
+      Sveltia CMS (https://sveltiacms.app) — the editing UI for everything under /content.
+      Lives in public/ so the static export copies it verbatim to out/admin/; the whole
+      export is served from a repository subpath on GitHub Pages, and Sveltia resolves
+      config.yml relative to its own location, so no basePath handling is needed here.
+
+      The version is pinned rather than tracking the CDN's latest: a CMS release that
+      changed behavior would otherwise reach editors unannounced. Bump deliberately,
+      checking https://github.com/sveltia/sveltia-cms/releases.
+
+      The integrity hash pins the bytes as well as the version — this page hands out
+      tokens with write access to the repository, so a compromised CDN response would
+      be worth someone's while. Recompute it whenever the version changes:
+        curl -sL <the src below> | openssl dgst -sha384 -binary | openssl base64 -A
+    -->
+    <script
+      src="https://unpkg.com/@sveltia/cms@0.180.0/dist/sveltia-cms.js"
+      integrity="sha384-ccLyWDjDEX15ag8HpPdLUrOVsQfKF57CXSuO7drqNJhddcOsbNNXXBB+mlxYKocq"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
