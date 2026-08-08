@@ -21,15 +21,16 @@ backend:
   # The site is a static export with no server of its own, so the OAuth code-for-token
   # exchange runs in a Cloudflare Worker (github.com/sveltia/sveltia-cms-auth).
   base_url: https://sveltia-cms-auth.stephaneberle9.workers.dev
-  # Sent to the worker as `site_id` and matched against its ALLOWED_DOMAINS. This
-  # identifies the CMS deployment, not the host serving it — Sveltia would otherwise
-  # fall back to the browser's hostname (`cms.netlify.com` on localhost). Pinning it to
-  # one value is what lets the same admin page authenticate from the preview host, from
-  # a future inext.icu, and from localhost without touching this file or Cloudflare.
-  # That the pinned value names the preview host also mirrors what `branch` above nails
-  # down — this CMS edits the preview wherever it is served from. Only `branch` enforces
-  # that, though; this option cannot affect where content lands.
-  site_domain: inext-startup-studio.github.io
+  # Sent to the worker as `site_id` and matched against its ALLOWED_DOMAINS: an identity
+  # for this CMS deployment rather than the address it is served from. Pinning it — the
+  # fallback is the browser's hostname, `cms.netlify.com` on localhost — is what lets the
+  # same admin page authenticate from the preview host, from a future inext.icu and from
+  # localhost. It has to appear verbatim in ALLOWED_DOMAINS, so the two change together
+  # or sign-in fails with UNSUPPORTED_DOMAIN. That the pinned value names the preview
+  # host mirrors what `branch` above nails down — this CMS edits the preview wherever it
+  # is served from. Only `branch` enforces that, though; this option cannot affect where
+  # content lands.
+  site_domain: preview.inext.icu
   # Commits are authored by whoever is signed in and GPG-signed by GitHub itself
   # (Sveltia writes through the GraphQL createCommitOnBranch mutation), so they pass a
   # signature requirement without editors holding keys.
@@ -61,10 +62,11 @@ slug:
 # production on merge.
 #
 # Careful when changing this: Sveltia keeps only the *origin* of this URL for per-entry
-# preview links (`new URL(site_url).origin`), so the repository subpath GitHub Pages
-# serves the preview from is dropped. Each `preview_path` below therefore has to carry
-# that subpath itself, or the link 404s on the bare github.io host.
-site_url: https://inext-startup-studio.github.io/inext-website-preview
+# preview links (`new URL(site_url).origin`), so anything below the host is dropped and
+# each `preview_path` below has to carry it instead. Nothing to carry while the preview
+# is served from the root of its own domain — but a move back to a repository subpath
+# would need the subpath in every `preview_path`, or the links 404.
+site_url: https://preview.inext.icu
 
 # ── Pages ────────────────────────────────────────────────────────────────────
 #
@@ -80,7 +82,9 @@ singletons:
     file: content/pages/home.md
     icon: home
     format: yaml-frontmatter
-    preview_path: inext-website-preview/
+    # Must stay non-empty: Sveltia drops the "view on the site" link entirely when
+    # `preview_path` is unset or empty, and "/" resolves to the site root.
+    preview_path: /
     fields:
       - &page_title
         name: title
@@ -356,7 +360,9 @@ singletons:
     file: content/pages/comite.md
     icon: groups
     format: yaml-frontmatter
-    preview_path: inext-website-preview/comite/
+    # Must stay non-empty: Sveltia drops the "view on the site" link entirely when
+    # `preview_path` is unset or empty.
+    preview_path: comite/
     fields:
       - *page_title
       - *page_description
