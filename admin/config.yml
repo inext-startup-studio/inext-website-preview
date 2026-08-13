@@ -132,7 +132,7 @@ singletons:
                   - name: href
                     label: Lien
                     widget: string
-                    hint: "Page interne (/comite/) ou ancre (/#contact)."
+                    hint: "Page interne (/contact/) ou ancre (/#notreprogramme)."
                   - name: variant
                     label: Style
                     widget: select
@@ -282,8 +282,55 @@ singletons:
               - *kicker
               - *heading
               - *intro
+              - name: bullets
+                label: Points clés
+                label_singular: Point
+                widget: list
+                required: false
+                summary: "{{fields.text}}"
+                hint: "Affichés à côté du formulaire : ce que le visiteur peut venir chercher."
+                fields:
+                  - name: text
+                    label: Texte
+                    widget: string
               - *art_image
               - *art_image_alt
+              - name: formTitle
+                label: Titre du formulaire
+                widget: string
+                default: Contactez-nous
+              - name: formIntro
+                label: Introduction du formulaire
+                widget: text
+                required: false
+              - name: subjects
+                label: Objets de demande proposés
+                label_singular: Objet
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                hint: "Options de la liste déroulante. Vide = le champ n'apparaît pas."
+                fields:
+                  - name: label
+                    label: Libellé
+                    widget: string
+              - name: consent
+                label: Case de consentement
+                widget: object
+                required: false
+                collapsed: auto
+                hint: "Vide = aucune case à cocher sous le formulaire."
+                fields:
+                  - name: text
+                    label: Texte
+                    widget: string
+                    hint: "Précède le lien, sans le point final."
+                  - name: linkLabel
+                    label: Libellé du lien
+                    widget: string
+                  - name: href
+                    label: Lien
+                    widget: string
 
           # ── ctaBanner ──
           - name: ctaBanner
@@ -355,6 +402,17 @@ singletons:
               - *art_image
               - *art_image_alt
 
+  - name: a-propos-page
+    label: Page À propos
+    file: content/pages/a-propos.md
+    icon: info
+    format: yaml-frontmatter
+    preview_path: a-propos/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
   - name: comite-page
     label: Page Comité
     file: content/pages/comite.md
@@ -363,6 +421,39 @@ singletons:
     # Must stay non-empty: Sveltia drops the "view on the site" link entirely when
     # `preview_path` is unset or empty.
     preview_path: comite/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
+  - name: contact-page
+    label: Page Contact
+    file: content/pages/contact.md
+    icon: mail
+    format: yaml-frontmatter
+    preview_path: contact/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
+  - name: mentions-legales-page
+    label: Mentions légales
+    file: content/pages/mentions-legales.md
+    icon: gavel
+    format: yaml-frontmatter
+    preview_path: mentions-legales/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
+  - name: confidentialite-page
+    label: Politique de confidentialité
+    file: content/pages/politique-de-confidentialite.md
+    icon: privacy_tip
+    format: yaml-frontmatter
+    preview_path: politique-de-confidentialite/
     fields:
       - *page_title
       - *page_description
@@ -438,6 +529,33 @@ singletons:
           - name: note
             label: Mention
             widget: string
+          - name: columns
+            label: Colonnes de liens
+            label_singular: Colonne
+            widget: list
+            required: false
+            summary: "{{fields.title}}"
+            fields:
+              - name: title
+                label: Titre de la colonne
+                widget: string
+              - name: links
+                label: Liens
+                label_singular: Lien
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - name: label
+                    label: Libellé
+                    widget: string
+                  - name: href
+                    label: Lien
+                    widget: string
+          - name: legalNote
+            label: Mention légale (bas de page)
+            widget: text
+            required: false
 
 # ── Collections ──────────────────────────────────────────────────────────────
 #
@@ -545,11 +663,11 @@ collections:
         public_folder: /assets/partners
       - *item_order
 
-  - name: comite
+  - name: board
     label: Comité de surveillance
     label_singular: Membre
     icon: badge
-    folder: content/comite
+    folder: content/board
     format: yaml-frontmatter
     extension: md
     identifier_field: name
