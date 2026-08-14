@@ -4,4 +4,4 @@
 :HL["/_next/static/media/99e609270109b47d-s.p.40sczeszzbjw1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/effe91970fc4db64-s.p.0oace-s_gkfks.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/assets/logo-mark.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mentions-legales","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"129abbd3c0430a45ccfc5aa84e877e8ebb6767ea"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"mentions-legales","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"12e8e0f9eae3152cbe504b4b780aa5837528b8f3"}
