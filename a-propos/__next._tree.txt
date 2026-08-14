@@ -7,4 +7,4 @@
 :HL["/assets/art/program.png","image"]
 :HL["/assets/art/eye.png","image"]
 :HL["/assets/art/portfolio.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"a-propos","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"05df94d9b32e991df5827bbd1675d280e16c5d15"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"a-propos","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"129abbd3c0430a45ccfc5aa84e877e8ebb6767ea"}
