@@ -545,17 +545,21 @@ singletons:
                 widget: list
                 required: false
                 summary: "{{fields.label}}"
-                fields:
+                fields: &footer_link_fields
                   - name: label
                     label: Libellé
                     widget: string
                   - name: href
                     label: Lien
                     widget: string
-          - name: legalNote
-            label: Mention légale (bas de page)
-            widget: text
+          - name: legalLinks
+            label: Liens légaux (ligne du bas)
+            label_singular: Lien
+            widget: list
             required: false
+            summary: "{{fields.label}}"
+            hint: "Affichés à côté de la mention de copyright, tout en bas."
+            fields: *footer_link_fields
 
 # ── Collections ──────────────────────────────────────────────────────────────
 #
