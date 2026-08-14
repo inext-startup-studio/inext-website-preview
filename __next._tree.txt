@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/2vkaq--qtbvij.css","style"]
+:HL["/_next/static/chunks/06ti8rk2ulvo2.css","style"]
 :HL["/_next/static/media/03fc1b4a8d284b5e-s.p.0wiir8udbzjvx.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/99e609270109b47d-s.p.40sczeszzbjw1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
@@ -54,4 +54,4 @@
 :HL["/assets/partners/comance.png","image"]
 :HL["/assets/partners/rydge-conseil.png","image"]
 :HL["/assets/partners/spinnaker-avocats.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"12e8e0f9eae3152cbe504b4b780aa5837528b8f3"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"91f0507e14ba6f4ea58e776a64b928b1f7e20cd4"}
