@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/06ti8rk2ulvo2.css","style"]
+:HL["/_next/static/chunks/2v_0nypd86yu0.css","style"]
 :HL["/_next/static/media/03fc1b4a8d284b5e-s.p.0wiir8udbzjvx.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/99e609270109b47d-s.p.40sczeszzbjw1.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
@@ -45,7 +45,6 @@
 :HL["/assets/partners/cogea-conseil.png","image"]
 :HL["/assets/partners/hbc-avocats.jpg","image"]
 :HL["/assets/partners/sinergys.png","image"]
-:HL["/assets/partners/ikomobi.png","image"]
 :HL["/assets/partners/cic.png","image"]
 :HL["/assets/partners/orion-raise.jpg","image"]
 :HL["/assets/partners/neotech-assurances.png","image"]
@@ -54,4 +53,4 @@
 :HL["/assets/partners/comance.png","image"]
 :HL["/assets/partners/rydge-conseil.png","image"]
 :HL["/assets/partners/spinnaker-avocats.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"ac201ca4d955662d8292dff21f8f058f2729a891"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"c43da32955e05be45e2d12f3d90879eedccf1ae3"}
