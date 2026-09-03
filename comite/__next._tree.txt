@@ -15,4 +15,4 @@
 :HL["/assets/board/pierre-violante.jpg","image"]
 :HL["/assets/board/patrick-saksik.jpg","image"]
 :HL["/assets/board/camille-debaille.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"comite","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"330c68a5e77dfaae0557fb8555b621bb654218e5"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"comite","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"9af9a6190b2bf2fa0bc12bec91f00444950ee230"}
