@@ -402,6 +402,77 @@ singletons:
               - *art_image
               - *art_image_alt
 
+          # ── eventsTeaser ──
+          # The card itself comes from the « Événements » collection: the next upcoming
+          # event, or nothing at all when there is none.
+          - name: eventsTeaser
+            label: "Prochain événement (accueil)"
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - name: allLabel
+                label: Lien vers la page des événements
+                widget: string
+                default: "Tous les événements →"
+              - name: detailsLabel
+                label: Libellé du bouton de la carte
+                widget: string
+                default: "Détails →"
+
+          # ── eventsList ──
+          # Every text here is the same for every event; what changes per event lives
+          # in the collection. Rules for what an event may say: .claude/skills/site-events.
+          - name: eventsList
+            label: "Liste des événements (page Événements)"
+            widget: object
+            fields:
+              - *anchor
+              - *kicker
+              - *heading
+              - *intro
+              - name: featuredLabel
+                label: Étiquette de l'événement en vedette
+                widget: string
+                default: Prochain événement
+              - name: programmeHeading
+                label: Titre du déroulé
+                widget: string
+                default: Déroulé de la journée
+              - name: programmeNote
+                label: Note sous le déroulé
+                widget: text
+                default: Le programme détaillé et la liste des intervenants sont communiqués aux invités avec leur invitation.
+              - name: registrationKicker
+                label: Sur-titre de l'encart d'inscription
+                widget: string
+                default: Vous êtes invité ?
+              - name: registrationHeading
+                label: Titre de l'encart d'inscription
+                widget: string
+                default: Confirmez votre présence
+              - name: registrationText
+                label: Texte de l'encart d'inscription
+                widget: text
+                default: Les invitations sont nominatives. Si vous avez reçu la vôtre, dites-nous que vous serez là ; nous vous renverrons les informations pratiques.
+              - name: emptyUpcoming
+                label: Texte quand aucun événement n'est à venir
+                widget: string
+                default: Aucun événement n'est programmé pour le moment.
+              - name: pastKicker
+                label: Sur-titre des éditions précédentes
+                widget: string
+                default: Archives
+              - name: pastHeading
+                label: Titre des éditions précédentes
+                widget: string
+                default: Éditions précédentes
+              - name: emptyPast
+                label: Texte quand aucune édition n'est passée
+                widget: string
+                default: Les éditions passées apparaîtront ici, avec un bref compte rendu.
+
   - name: a-propos-page
     label: Page À propos
     file: content/pages/a-propos.md
@@ -432,6 +503,17 @@ singletons:
     icon: mail
     format: yaml-frontmatter
     preview_path: contact/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
+  - name: evenements-page
+    label: Page Événements
+    file: content/pages/evenements.md
+    icon: event
+    format: yaml-frontmatter
+    preview_path: evenements/
     fields:
       - *page_title
       - *page_description
@@ -501,6 +583,14 @@ singletons:
             label: LinkedIn
             widget: string
             type: url
+      - name: announcement
+        label: Bandeau d'annonce
+        widget: select
+        default: ribbon
+        hint: "Annonce le prochain événement au-dessus de l'en-tête, sur toutes les pages. N'apparaît que lorsqu'un événement est à venir."
+        options:
+          - { label: "Affiché", value: ribbon }
+          - { label: "Masqué", value: none }
       - name: contact
         label: Contact
         widget: object
@@ -698,6 +788,103 @@ collections:
         media_folder: /public/assets/board
         public_folder: /assets/board
       - *item_order
+
+  # One file per event, sorted by date. What an entry may say in public — and what must
+  # stay in the invitation — is decided in .claude/skills/site-events/SKILL.md; the
+  # hints below are the short form. There is deliberately no field for a detailed
+  # agenda or a list of speakers.
+  - name: events
+    label: Événements
+    label_singular: Événement
+    icon: event
+    folder: content/events
+    format: yaml-frontmatter
+    extension: md
+    identifier_field: title
+    sortable_fields:
+      fields: [start, title]
+      default: { field: start, direction: descending }
+    fields:
+      - name: title
+        label: Titre
+        widget: string
+        hint: "Le nom de l'édition, année comprise : « SYMPOSIUM INEXT 2026 »."
+      - name: start
+        label: Début
+        widget: datetime
+        format: YYYY-MM-DDTHH:mm:ssZ
+      - name: end
+        label: Fin
+        widget: datetime
+        format: YYYY-MM-DDTHH:mm:ssZ
+        required: false
+        hint: "Vide = l'événement se termine à la fin de sa journée."
+      - name: venue
+        label: Lieu
+        widget: string
+      - name: venueUrl
+        label: Site du lieu
+        widget: string
+        required: false
+        pattern: ["^https://", "L'adresse doit commencer par https://"]
+        hint: "Le site du lieu, lien externe. Vide = le nom du lieu n'est pas cliquable."
+      - name: address
+        label: Adresse
+        widget: string
+        required: false
+      - name: city
+        label: Ville
+        widget: string
+      - name: access
+        label: Accès
+        widget: select
+        default: invitation
+        options:
+          - { label: Sur invitation, value: invitation }
+          - { label: Sur inscription, value: inscription }
+          - { label: Entrée libre, value: libre }
+      - name: audience
+        label: Public
+        widget: string
+        required: false
+        hint: "Qui est invité, au complet : « Associés, partenaires et startups ». Le champ « Accès » dit déjà « Sur invitation », inutile de le répéter. Court : le libellé s'affiche en pastille, sur une seule ligne."
+      - name: summary
+        label: Présentation
+        widget: text
+        hint: "Le genre de la journée, en une ou deux phrases. Jamais de nom de startup, jamais de mention de levée de fonds."
+      - name: programme
+        label: Déroulé
+        label_singular: Étape
+        widget: list
+        required: false
+        summary: "{{fields.slot}} — {{fields.text}}"
+        hint: "À grands traits (« Matin », « Journée »). Pas de créneau horaire associé à un intervenant, pas de nom de startup."
+        fields:
+          - name: slot
+            label: Moment
+            widget: string
+          - name: text
+            label: Contenu
+            widget: string
+      - name: registration
+        label: Confirmation de présence
+        widget: object
+        required: false
+        collapsed: auto
+        hint: "Vide = pas de bouton. L'objet doit exister dans la liste « Objets de demande proposés » de la page Contact."
+        fields:
+          - name: label
+            label: Libellé du bouton
+            widget: string
+          - name: subject
+            label: Objet pré-sélectionné dans le formulaire
+            widget: string
+      - name: recap
+        label: Compte rendu (après l'événement)
+        widget: markdown
+        required: false
+        editor_components: []
+        hint: "Deux à quatre phrases, sans chiffres ni noms de startups. Affiché dans « Éditions précédentes »."
 
 # Browsing the media library by folder rather than as one flat list.
 asset_collections:
