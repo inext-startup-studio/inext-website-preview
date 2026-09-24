@@ -497,6 +497,17 @@ singletons:
       - *page_description
       - *page_blocks
 
+  - name: charte-ethique-page
+    label: Charte éthique
+    file: content/pages/charte-ethique.md
+    icon: verified
+    format: yaml-frontmatter
+    preview_path: charte-ethique/
+    fields:
+      - *page_title
+      - *page_description
+      - *page_blocks
+
   - name: contact-page
     label: Page Contact
     file: content/pages/contact.md
