@@ -15,4 +15,4 @@
 :HL["/assets/board/patrick-saksik.jpg","image"]
 :HL["/assets/board/guillaume-sarton.jpg","image"]
 :HL["/assets/board/pierre-violante.jpg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"comite","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"7b9c6ce06364f06f9b0a08c8b3208044066d0ecb"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"comite","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"ea8b94b9fad1edff3f5247b2f54c37903f6fc1b0"}
