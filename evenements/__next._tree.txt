@@ -4,4 +4,4 @@
 :HL["/_next/static/media/ibm_plex_sans_latin_wght_normal-s.p.15jby9eboz7vb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/space_grotesk_latin_wght_normal-s.p.092gko6h6levo.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/assets/logo-mark.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"evenements","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"297d54946e2a6f1f84302b5157a8a2f8dd860958"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"evenements","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"106aa07c3585d41c2d73f5882628448d270db707"}

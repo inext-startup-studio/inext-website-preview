@@ -51,8 +51,8 @@
 :HL["/assets/partners/orion-raise.jpg","image"]
 :HL["/assets/partners/neotech-assurances.png","image"]
 :HL["/assets/partners/acing.png","image"]
-:HL["/assets/partners/wiseed.png","image"]
+:HL["/assets/partners/wagram-expertise-conseil.png","image"]
 :HL["/assets/partners/comance.png","image"]
-:HL["/assets/partners/rydge-conseil.png","image"]
+:HL["/assets/partners/infinite-capital.png","image"]
 :HL["/assets/partners/spinnaker-avocats.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"297d54946e2a6f1f84302b5157a8a2f8dd860958"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"106aa07c3585d41c2d73f5882628448d270db707"}
