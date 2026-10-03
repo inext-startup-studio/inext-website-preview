@@ -56,4 +56,4 @@
 :HL["/assets/partners/infinite-capital.png","image"]
 :HL["/assets/partners/spinnaker-avocats.png","image"]
 :HL["/assets/partners/potential.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"793a26581617279b012f1150805527c08655e8af"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"41e12c55024c72b66b5848b0ae7f77e6259e4688"}

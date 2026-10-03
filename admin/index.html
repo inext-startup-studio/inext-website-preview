@@ -9,9 +9,10 @@
   <body>
     <!--
       Sveltia CMS (https://sveltiacms.app) — the editing UI for everything under /content.
-      Lives in public/ so the static export copies it verbatim to out/admin/; the whole
-      export is served from a repository subpath on GitHub Pages, and Sveltia resolves
-      config.yml relative to its own location, so no basePath handling is needed here.
+      Lives in public/ so the static export copies it verbatim to out/admin/. Sveltia
+      resolves config.yml relative to its own location, so the page needs no basePath
+      handling: it works from the domain root both sites are served from today, and
+      equally from a repository subpath if PREVIEW_BASE_PATH ever builds for one.
 
       The version is pinned rather than tracking the CDN's latest: a CMS release that
       changed behavior would otherwise reach editors unannounced. Bump deliberately,
