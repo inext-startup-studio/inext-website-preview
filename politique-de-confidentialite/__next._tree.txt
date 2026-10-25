@@ -1,7 +1,9 @@
-:HL["/_next/static/chunks/3a-3y2l51cx3w.css","style"]
+:HL["/_next/static/chunks/23vcqvyc4mkvx.css","style"]
 :HL["/_next/static/media/ibm_plex_mono_latin_400_normal.p.3xdfs0-p_zi4c.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/ibm_plex_mono_latin_500_normal.p.11q3guvgd1r20.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/ibm_plex_sans_latin_wght_normal-s.p.15jby9eboz7vb.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/space_grotesk_latin_wght_normal-s.p.092gko6h6levo.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/assets/logo-mark.png","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"politique-de-confidentialite","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"5a626af7dfd9c6cddd18294a9a33cf9b524a7137"}
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"politique-de-confidentialite","h":64,"c":"$Q2"}]]
+0:{"b":"9d5c7966147edbd410d5ef30b19f06fbeb715d9d","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
