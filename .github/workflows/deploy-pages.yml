@@ -16,15 +16,25 @@ permissions:
   pages: write
   id-token: write
 
-# Never let two deploys race; queue them instead of cancelling, so the last
-# push always ends up being the one that is live.
+# Never let two deploys race, and let the newest push cancel whatever is still
+# running. Every run deploys the whole site, so the last push alone decides what is
+# live and an older run has nothing left to contribute. Queueing instead let one run
+# hold the group for three weeks: on 2026-10-06 the preview deploy stuck in "waiting"
+# on the github-pages environment, which has no reviewers to approve it and no
+# timeout short of GitHub's thirty days, and every later deploy queued behind it and
+# was cancelled by the next. Cancelling a run mid-deploy is safe: deploy-pages
+# withdraws the unfinished deployment, and the site stays on its last good version.
 concurrency:
   group: pages
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Covers a run that hangs while executing, not one waiting on the environment:
+    # the clock starts only once a runner picks the job up. The deploy step's own
+    # thirty-minute timeout below is the longest legitimate wait.
+    timeout-minutes: 45
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
