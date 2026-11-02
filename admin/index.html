@@ -22,6 +22,9 @@
       tokens with write access to the repository, so a compromised CDN response would
       be worth someone's while. Recompute it whenever the version changes:
         curl -sL <the src below> | openssl dgst -sha384 -binary | openssl base64 -A
+      Renovate bumps the version and not the hash, so its PR always needs this.
+      `npm run check:sri` fails on a stale hash and prints the right one; the PR check
+      and both publish workflows run it.
     -->
     <script
       src="https://unpkg.com/@sveltia/cms@0.180.0/dist/sveltia-cms.js"
