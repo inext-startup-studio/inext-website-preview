@@ -9,4 +9,4 @@
 :HL["/assets/art/portfolio.png","image"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"a-propos","h":64,"c":"$Q2"}]]
-0:{"b":"80046ac1ab183f93ba1532d0be0ca1d4ba05935f","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"b177f92f1ff6685df3eedf845fd525f3afbb5be5","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
