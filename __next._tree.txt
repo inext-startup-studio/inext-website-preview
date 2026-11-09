@@ -59,4 +59,4 @@
 :HL["/assets/partners/potential.png","image"]
 :HL["/assets/partners/capital-cell.png","image"]
 1:[["children",{"s":"__PAGE__","h":128}]]
-0:{"b":"9038ca2e7422e471d6a9205750edb81e1786e70d","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"88483b23b27392b94fe1219957ef273065afdc5c","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
