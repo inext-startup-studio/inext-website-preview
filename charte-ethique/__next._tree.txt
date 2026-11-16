@@ -6,4 +6,4 @@
 :HL["/assets/logo-mark.png","image"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"charte-ethique","h":64,"c":"$Q2"}]]
-0:{"b":"8bb7fd804ea3321b2c545ca1b1e23178e13c6ab0","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"5b571f277f24b9e954f9b66ede04e1107a7026d9","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
