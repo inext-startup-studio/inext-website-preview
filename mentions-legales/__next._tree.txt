@@ -6,4 +6,4 @@
 :HL["/assets/logo-mark.png","image"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"mentions-legales","h":64,"c":"$Q2"}]]
-0:{"b":"07cd635bd4a8dc6535eb47b3d45b95449ddbcafd","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
+0:{"b":"8220070249e53e43cc77ab19beb364c12a6a35f9","t":{"t":{"s":"","h":16,"c":"$Q1"}}}
